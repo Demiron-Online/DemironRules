@@ -1,0 +1,5 @@
+name: DemironRules
+version: '${project.version}'
+main: sdravstvuite.demironrules.DemironRules
+api-version: 1.19
+authors: [Sdravstvuite]
