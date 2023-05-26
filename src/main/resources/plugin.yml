@@ -3,3 +3,19 @@ version: '${project.version}'
 main: sdravstvuite.demironrules.DemironRules
 api-version: 1.19
 authors: [Sdravstvuite]
+depend: [Towny, OpeNLogin]
+commands:
+  changegenderwoman:
+    description: Take Woman gender
+  changegenderman:
+    description: Take Man gender
+  changeracealad:
+    description: Take race
+  changeracvaryag:
+    description: Take race
+  changeracevildice:
+    description: Take race
+  changeraceacrice:
+    description: Take race
+  changeracegothland:
+    description: Take race
