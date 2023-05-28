@@ -3,7 +3,7 @@ version: '${project.version}'
 main: sdravstvuite.demironrules.DemironRules
 api-version: 1.19
 authors: [Sdravstvuite]
-depend: [Towny, OpeNLogin]
+depend: [Towny, OpeNLogin, FastAsyncWorldEdit]
 commands:
   changegenderwoman:
     description: Take Woman gender
@@ -11,7 +11,7 @@ commands:
     description: Take Man gender
   changeracealad:
     description: Take race
-  changeracvaryag:
+  changeracevaryag:
     description: Take race
   changeracevildice:
     description: Take race
@@ -19,3 +19,13 @@ commands:
     description: Take race
   changeracegothland:
     description: Take race
+  mineregencreate:
+    description: Create new mine
+  mineregendelete:
+    description: Delete mine by name
+  mineregendeletegroup:
+    description: Delete mine group
+  mineregeninsta:
+    description: Insta regen mine by name
+  mineregengrouprandom:
+    description: Insta regen random mine by group

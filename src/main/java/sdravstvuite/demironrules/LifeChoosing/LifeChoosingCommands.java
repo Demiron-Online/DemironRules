@@ -18,38 +18,47 @@ import sdravstvuite.demironrules.DemironRules;
 public class LifeChoosingCommands implements CommandExecutor {
     ConversationFactory factory = new ConversationFactory(DemironRules.getInstance());
 
+    TextComponent racesMessage = Component.text().content("Я Элладец").clickEvent(ClickEvent.runCommand("/changeracealad")).color(TextColor.fromHexString("#0384fc"))
+            .append(Component.text().content("  Я Варяг").clickEvent(ClickEvent.runCommand("/changeracevaryag")).color(TextColor.fromHexString("#fcba03")))
+            .append(Component.text().content("  Я Вильдиец").clickEvent(ClickEvent.runCommand("/changeracevildice")).color(TextColor.fromHexString("#ffcb3b")))
+            .append(Component.text().content(" Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
+            .append(Component.text().content("  Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
+            .build();
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if(sender instanceof Player){
             Player p = (Player) sender;
             if(s.equalsIgnoreCase("changegenderwoman")){
-                if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
+                String takedData = ConfigManager.getData(p, "count_lives");
+                if(takedData.equalsIgnoreCase("null")){
                     ConfigManager.changeLife((Player) sender, "gender", "woman");
-                    TextComponent message = Component.text().content("Я Элладец").clickEvent(ClickEvent.runCommand("/changeracealad")).color(TextColor.fromHexString("#0384fc"))
-                            .append(Component.text().content("  Я Варяг").clickEvent(ClickEvent.runCommand("/changeracevaryag")).color(TextColor.fromHexString("#fcba03")))
-                            .append(Component.text().content("  Я Вильдиец").clickEvent(ClickEvent.runCommand("/changeracevildice")).color(TextColor.fromHexString("#ffcb3b")))
-                            .appendSpace().append(Component.text().content(" Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
-                            .append(Component.text().content("  Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
-                            .build();
                     sender.sendMessage("Ты теперь женщина");
-                    p.sendMessage(message);
-                }else{
+                    p.sendMessage(racesMessage);
+                } else if (DemironRules.isObjectInteger(takedData)) {
+                    if(Integer.parseInt(takedData) == 0){
+                        ConfigManager.changeLife((Player) sender, "gender", "woman");
+                        sender.sendMessage("Ты теперь женщина");
+                        p.sendMessage(racesMessage);
+                    }
+                } else{
                     sender.sendMessage("Нельзя изменить пол при жизни.");
                 }
                 return true;
             }
             if(s.equalsIgnoreCase("changegenderman")){
-                if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
+                String takedData = ConfigManager.getData(p, "count_lives");
+                if(takedData.equalsIgnoreCase("null")){
                     ConfigManager.changeLife((Player) sender, "gender", "man");
-                    TextComponent message = Component.text().content("Я Элладец").clickEvent(ClickEvent.runCommand("/changeracealad")).color(TextColor.fromHexString("#0384fc"))
-                            .append(Component.text().content("  Я Варяг").clickEvent(ClickEvent.runCommand("/changeracevaryag")).color(TextColor.fromHexString("#fcba03")))
-                            .append(Component.text().content("  Я Вильдиец").clickEvent(ClickEvent.runCommand("/changeracevildice")).color(TextColor.fromHexString("#ffcb3b")))
-                            .appendSpace().append(Component.text().content(" Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
-                            .append(Component.text().content("  Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
-                            .build();
                     sender.sendMessage("Ты теперь мужчина");
-                    p.sendMessage(message);
-                }else{
+                    p.sendMessage(racesMessage);
+                } else if (DemironRules.isObjectInteger(takedData)) {
+                    if(Integer.parseInt(takedData) == 0){
+                        ConfigManager.changeLife((Player) sender, "gender", "man");
+                        sender.sendMessage("Ты теперь мужчина");
+                        p.sendMessage(racesMessage);
+                    }
+                } else{
                     sender.sendMessage("Нельзя изменить пол при жизни.");
                 }
                 return true;
@@ -58,7 +67,9 @@ public class LifeChoosingCommands implements CommandExecutor {
                 if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
                     ConfigManager.changeLife((Player) sender, "race", "alad");
                     Conversation conv = factory.withFirstPrompt(new LifeConverstation()).withLocalEcho(false).buildConversation((Conversable) sender);
-                    conv.begin();
+                    if(!p.isConversing()) {
+                        conv.begin();
+                    }
                     sender.sendMessage("Ты теперь Элладец");
                 }else{
                     sender.sendMessage("Нельзя изменить расу при жизни.");
@@ -68,7 +79,9 @@ public class LifeChoosingCommands implements CommandExecutor {
                 if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
                     ConfigManager.changeLife((Player) sender, "race", "varyag");
                     Conversation conv = factory.withFirstPrompt(new LifeConverstation()).withLocalEcho(false).buildConversation((Conversable) sender);
-                    conv.begin();
+                    if(!p.isConversing()) {
+                        conv.begin();
+                    }
                     sender.sendMessage("Ты теперь Варяг");
                 }else{
                     sender.sendMessage("Нельзя изменить расу при жизни.");
@@ -78,7 +91,9 @@ public class LifeChoosingCommands implements CommandExecutor {
                 if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
                     ConfigManager.changeLife((Player) sender, "race", "vildice");
                     Conversation conv = factory.withFirstPrompt(new LifeConverstation()).withLocalEcho(false).buildConversation((Conversable) sender);
-                    conv.begin();
+                    if(!p.isConversing()) {
+                        conv.begin();
+                    }
                     sender.sendMessage("Ты теперь Вильдиец");
                 }else{
                     sender.sendMessage("Нельзя изменить расу при жизни.");
@@ -88,7 +103,9 @@ public class LifeChoosingCommands implements CommandExecutor {
                 if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
                     ConfigManager.changeLife((Player) sender, "race", "acrice");
                     Conversation conv = factory.withFirstPrompt(new LifeConverstation()).withLocalEcho(false).buildConversation((Conversable) sender);
-                    conv.begin();
+                    if(!p.isConversing()) {
+                        conv.begin();
+                    }
                     sender.sendMessage("Ты теперь Акриец");
                 }else{
                     sender.sendMessage("Нельзя изменить расу при жизни.");
@@ -98,7 +115,9 @@ public class LifeChoosingCommands implements CommandExecutor {
                 if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0){
                     ConfigManager.changeLife((Player) sender, "race", "gothland");
                     Conversation conv = factory.withFirstPrompt(new LifeConverstation()).withLocalEcho(false).buildConversation((Conversable) sender);
-                    conv.begin();
+                    if(!p.isConversing()) {
+                        conv.begin();
+                    }
                     sender.sendMessage("Ты теперь Готландец");
                 }else{
                     sender.sendMessage("Нельзя изменить расу при жизни.");
