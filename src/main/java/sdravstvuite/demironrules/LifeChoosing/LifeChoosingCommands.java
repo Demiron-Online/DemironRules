@@ -132,3 +132,4 @@ public class LifeChoosingCommands implements CommandExecutor {
 // Вильдийцы
 // Акрийцы
 // Готландцы
+// я русский
