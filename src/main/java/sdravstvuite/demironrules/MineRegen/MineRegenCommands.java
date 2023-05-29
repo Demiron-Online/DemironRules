@@ -12,6 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import com.sk89q.worldedit.bukkit.*;
+import sdravstvuite.demironrules.ConfigManager;
+import java.util.Set;
 
 import static sdravstvuite.demironrules.ConfigManager.*;
 
@@ -89,6 +91,7 @@ public class MineRegenCommands implements CommandExecutor {
                     p.sendMessage(ChatColor.RED+"Используй команду в виде /mineregengrouprandom " + ChatColor.WHITE + "<название_группы>");
                 }else{
                     if (getGroup(strings[0]) != null){
+                        p.sendMessage(ConfigManager.getConfigArea().getConfigurationSection("groups." + strings[0]).toString());
                         p.sendMessage(MineRegen.MineRegenRandom(strings[0]));
                     } else {
                         p.sendMessage(ChatColor.RED+"Группы под названием " + ChatColor.WHITE + strings[0] + ChatColor.RED + " не существует.");
