@@ -16,7 +16,10 @@ import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import sdravstvuite.demironrules.DemironRules;
+
+import java.util.List;
 
 public class LavaEventListener implements Listener {
     DemironRules plugin;
@@ -26,10 +29,10 @@ public class LavaEventListener implements Listener {
 
     @EventHandler
     public void LavaOnBlockPlace(BlockPlaceEvent e) { //Поставка блока в лаву
-        if (e.getBlock().getLocation().getBlock().getType() == Material.LAVA){
+        if (e.getBlockReplacedState().getType() == Material.LAVA){
             e.getBlock().setType(Material.LAVA);
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 2, 1);
-            e.getBlock().getLocation().getWorld().playEffect(e.getBlock().getLocation(), Effect.EXTINGUISH, 2004);
+            e.getBlock().getLocation().getWorld().playEffect(e.getBlock().getLocation().add(0,1,0), Effect.EXTINGUISH, 2004);
         }
     }
 
@@ -54,6 +57,24 @@ public class LavaEventListener implements Listener {
             if (westBlock.getType() == Material.WATER) {westBlock.setType(Material.COBBLESTONE); event.setCancelled(true);}
             if (eastBlock.getType() == Material.WATER) {eastBlock.setType(Material.COBBLESTONE); event.setCancelled(true);}
 
+        }
+    }
+    @EventHandler
+    public void onPlayerMovingCloseToLava(PlayerMoveEvent event) {
+        Player p = event.getPlayer();
+        Location loc = p.getLocation();
+        int temp = 0;
+
+        loc = loc.add(3, 0, 3);
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (loc.getBlock().getType() == Material.LAVA) {
+                    p.sendMessage(i + " "  + " "+ j + " LAVAAAA");//For debug
+                    temp++;
+                }
+                loc = loc.add(0, 0, -1);
+            }
+            loc = loc.add(-1, 0, 7);
         }
     }
 }

@@ -12,7 +12,7 @@ public class MineRegen {
         return (int) (Math.random() * ((max - min) + 1)) + min;
     }
     public static void MineRegen(String group, String selection_name){
-        ConfigManager.reload();
+        ConfigManager.reloadArea();
         List<Location> blocks = ConfigManager.getSelectionBlocks(group, selection_name);
         Material blocksType = ConfigManager.getAreaMaterial(group, selection_name);
         assert blocks != null;
@@ -22,15 +22,14 @@ public class MineRegen {
             }
         }
     }
-    public static String MineRegenRandom(String group){
 
-        ConfigManager.reload();
-        Set<String> answer = ConfigManager.getConfigArea().getConfigurationSection("group." + group).getKeys(true);
+    public static String MineRegenRandom(String group){
+        ConfigManager.reloadArea();
+        Set<String> answer = ConfigManager.getConfigArea().getConfigurationSection("groups." + group).getKeys(false);
         String[] areas = new String[answer.size()];
         answer.toArray(areas);
-        int random = (int) getRInt(1, areas.length);
+        int random = (int) getRInt(0, areas.length-1);
         MineRegen(group, areas[random]);
         return areas[random];
     }
-
 }
