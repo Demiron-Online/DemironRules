@@ -23,6 +23,7 @@ public class MineRegen {
         }
     }
     public static String MineRegenRandom(String group){
+
         ConfigManager.reload();
         Set<String> answer = ConfigManager.getConfigArea().getConfigurationSection("group." + group).getKeys(true);
         String[] areas = new String[answer.size()];
