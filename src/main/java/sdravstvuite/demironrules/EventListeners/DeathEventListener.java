@@ -26,9 +26,11 @@ public class DeathEventListener implements Listener {
 
     private BukkitTask task;
 
+    String world = "Demiron";
+    String world_the_end = "Demiron_the_end";
     public void loadWorlds() {
-        new WorldCreator("world").createWorld();
-        new WorldCreator("world_the_end").createWorld();
+        new WorldCreator(world).createWorld();
+        new WorldCreator(world_the_end).createWorld();
     }
 
     @EventHandler
@@ -46,7 +48,7 @@ public class DeathEventListener implements Listener {
                 e.getPlayer().kick(Component.text().content("Даже так ты как-то умудрился...").build());
             } else {
                 loadWorlds();
-                Location loc = new Location(Bukkit.getWorld("world_the_end"), 0, 100, 0);
+                Location loc = new Location(Bukkit.getWorld(world_the_end), 0, 100, 0);
                 e.getPlayer().teleport(loc);
                 ConfigManager.changeLife(e.getPlayer(), "count_lives", -1);
                 startEndTimer(e.getPlayer(), 15);
@@ -58,10 +60,10 @@ public class DeathEventListener implements Listener {
     public void onDamageInEnd(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
-        if (p.getWorld() == Bukkit.getWorld("world_the_end")) {
+        if (p.getWorld() == Bukkit.getWorld(world_the_end)) {
             e.setCancelled(true);
             if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                Location backLoc = new Location(Bukkit.getWorld("world"), 0, 90, 0);
+                Location backLoc = new Location(Bukkit.getWorld(world), 0, 90, 0);
                 p.teleport(backLoc);
             }
         }
@@ -70,7 +72,7 @@ public class DeathEventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(AsyncAuthenticateEvent e) {
         Player p = e.getPlayer();
-        if (p.getWorld() == Bukkit.getWorld("world_the_end")) {
+        if (p.getWorld() == Bukkit.getWorld(world_the_end)) {
             startEndTimer(e.getPlayer(), 15);
         }
     }
@@ -86,14 +88,14 @@ public class DeathEventListener implements Listener {
                 if (p.isDead()) {
                     loadWorlds();
                     p.spigot().respawn();
-                    Location loc = new Location(Bukkit.getWorld("world_the_end"), 0, 100, 0);
+                    Location loc = new Location(Bukkit.getWorld(world_the_end), 0, 100, 0);
                     p.teleport(loc);
                 }
                 if (timer_time == 0) {
                     if (p.getBedSpawnLocation() != null) {
                         backLoc = p.getBedSpawnLocation();
                     } else {
-                        backLoc = new Location(Bukkit.getWorld("world"), 0, 90, 0);
+                        backLoc = new Location(Bukkit.getWorld(world), 0, 90, 0);
                     }
                     loadWorlds();
                     p.teleport(backLoc);

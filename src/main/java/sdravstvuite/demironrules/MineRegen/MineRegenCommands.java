@@ -34,7 +34,7 @@ public class MineRegenCommands implements CommandExecutor {
                     if (region != null){
                         if (Material.getMaterial(strings[2]) != null) {
                             createNewArea(strings[0], strings[1], region, Material.getMaterial(strings[2]));
-                            p.sendMessage(ChatColor.GREEN+"Рудник " + strings[0] + " с " + strings[1] + " был добавлен в группу " + strings[2]);
+                            p.sendMessage(ChatColor.GREEN+"Рудник " + strings[1] + " с " + strings[2] + " был добавлен в группу " + strings[0]);
                             p.sendMessage(ChatColor.GOLD+"Если вы ошиблись при создании, используйте /mineregendeletegroup " + ChatColor.WHITE + "<название_группы>");
                             p.sendMessage(ChatColor.GOLD+"Или /mineregendelete " + ChatColor.WHITE + "<название_группы> <название_рудника>");
                         }else {
@@ -65,7 +65,7 @@ public class MineRegenCommands implements CommandExecutor {
                     p.sendMessage(ChatColor.RED+"Используй команду в виде /mineregendeletegroup " + ChatColor.WHITE + "<название_группы>");
                 }else{
                     if (getGroup(strings[0]) != null){
-                            deleteByNameArea(strings[0], strings[1]);
+                            deleteByGroupArea(strings[0]);
                     } else {
                         p.sendMessage(ChatColor.RED+"Группы под названием " + ChatColor.WHITE + strings[0] + ChatColor.RED + " не существует.");
                     }
@@ -79,7 +79,7 @@ public class MineRegenCommands implements CommandExecutor {
                         if (getArea(strings[0], strings[1]) != null){
                             MineRegen.MineRegen(strings[0], strings[1]);
                         }else {
-                            p.sendMessage(ChatColor.RED+"Рудника под названием " + ChatColor.WHITE + strings[1] + ChatColor.RED + " в группе " + ChatColor.WHITE + strings[0] + ChatColor.RED + " не существует.");
+                            p.sendMessage(ChatColor.RED+"Рудника под названием " + ChatColor.WHITE + strings[0] + ChatColor.RED + " в группе " + ChatColor.WHITE + strings[1] + ChatColor.RED + " не существует.");
                         }
                     } else {
                         p.sendMessage(ChatColor.RED+"Группы под названием " + ChatColor.WHITE + strings[0] + ChatColor.RED + " не существует.");
