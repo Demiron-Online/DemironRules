@@ -20,9 +20,9 @@ public class LifeChoosingCommands implements CommandExecutor {
 
     TextComponent racesMessage = Component.text().content("Я Элладец").clickEvent(ClickEvent.runCommand("/changeracealad")).color(TextColor.fromHexString("#0384fc"))
             .append(Component.text().content("  Я Варяг").clickEvent(ClickEvent.runCommand("/changeracevaryag")).color(TextColor.fromHexString("#fcba03")))
-            .append(Component.text().content("  Я Вильдиец").clickEvent(ClickEvent.runCommand("/changeracevildice")).color(TextColor.fromHexString("#ffcb3b")))
-            .append(Component.text().content(" Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
-            .append(Component.text().content("  Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
+            .append(Component.text().content("  Я Вильдиец\n").clickEvent(ClickEvent.runCommand("/changeracevildice")).color(TextColor.fromHexString("#ffcb3b")))
+            .append(Component.text().content("         Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
+            .append(Component.text().content("       Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
             .build();
 
     @Override
@@ -31,35 +31,24 @@ public class LifeChoosingCommands implements CommandExecutor {
             Player p = (Player) sender;
             if(s.equalsIgnoreCase("changegenderwoman")){
                 String takedData = ConfigManager.getData(p, "count_lives");
-                if(takedData.equalsIgnoreCase("null")){
+                if(Integer.parseInt(takedData) == 0){
                     ConfigManager.changeLife((Player) sender, "gender", "woman");
                     sender.sendMessage("Ты теперь женщина");
                     p.sendMessage(racesMessage);
-                } else if (DemironRules.isObjectInteger(takedData)) {
-                    if(Integer.parseInt(takedData) == 0){
-                        ConfigManager.changeLife((Player) sender, "gender", "woman");
-                        sender.sendMessage("Ты теперь женщина");
-                        p.sendMessage(racesMessage);
-                    }
-                } else{
+                }
+                 else{
                     sender.sendMessage("Нельзя изменить пол при жизни.");
                 }
                 return true;
             }
             if(s.equalsIgnoreCase("changegenderman")){
                 String takedData = ConfigManager.getData(p, "count_lives");
-                if(takedData.equalsIgnoreCase("null")){
+                if(Integer.parseInt(takedData) == 0){
                     ConfigManager.changeLife((Player) sender, "gender", "man");
-                    sender.sendMessage("Ты теперь мужчина");
+                    sender.sendMessage("Ты теперь мужчина2");
                     p.sendMessage(racesMessage);
-                } else if (DemironRules.isObjectInteger(takedData)) {
-                    if(Integer.parseInt(takedData) == 0){
-                        ConfigManager.changeLife((Player) sender, "gender", "man");
-                        sender.sendMessage("Ты теперь мужчина");
-                        p.sendMessage(racesMessage);
-                    }
                 } else{
-                    sender.sendMessage("Нельзя изменить пол при жизни.");
+                sender.sendMessage("Нельзя изменить пол при жизни.");
                 }
                 return true;
             }

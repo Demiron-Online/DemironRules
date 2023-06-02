@@ -31,8 +31,8 @@ public class LavaEventListener implements Listener {
     public void LavaOnBlockPlace(BlockPlaceEvent e) { //Поставка блока в лаву
         if (e.getBlockReplacedState().getType() == Material.LAVA){
             e.getBlock().setType(Material.LAVA);
-            e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 2, 1);
-            e.getBlock().getLocation().getWorld().playEffect(e.getBlock().getLocation().add(0,1,0), Effect.EXTINGUISH, 2004);
+            e.getBlock().getLocation().getWorld().playSound(e.getBlock().getLocation().add(0,1,0), Sound.BLOCK_FIRE_EXTINGUISH, 2, 1);
+            e.getBlock().getLocation().getWorld().playEffect(e.getBlock().getLocation().add(0,1,0), Effect.EXTINGUISH, null);
         }
     }
 
@@ -63,18 +63,18 @@ public class LavaEventListener implements Listener {
     public void onPlayerMovingCloseToLava(PlayerMoveEvent event) {
         Player p = event.getPlayer();
         Location loc = p.getLocation();
-        int temp = 0;
-
-        loc = loc.add(3, 0, 3);
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (loc.getBlock().getType() == Material.LAVA) {
-                    p.sendMessage(i + " "  + " "+ j + " LAVAAAA");//For debug
-                    temp++;
+        loc = loc.add(3, -3, 3);
+        for (int h = 0; h < 7; h++) {
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 7; j++) {
+                    if (loc.getBlock().getType() == Material.LAVA) {
+                        p.setFireTicks(80);
+                    }
+                    loc = loc.add(0, 0, -1);
                 }
-                loc = loc.add(0, 0, -1);
+                loc = loc.add(-1, 0, 7);
             }
-            loc = loc.add(-1, 0, 7);
+            loc = loc.add(7, 1, 7);
         }
     }
 }

@@ -97,18 +97,11 @@ public class ConfigManager {
         reload();
         String p = player.getDisplayName();
         Object get = config.get("players." + p + "." + type_data);
-        if (get != null){
-            if(type_data.equalsIgnoreCase("count_lives")) {
+            if (type_data.equalsIgnoreCase("count_lives") && get != null && get != "null") {
                 config.set("players." + p + "." + type_data, (Integer) get + (Integer) new_data);
             }else{
                 config.set("players." + p + "." + type_data, new_data);
             }
-        }else{
-            config.set("players." + p + "." + "gender", "null");
-            config.set("players." + p + "." + "race", "null");
-            config.set("players." + p + "." + "name", "null");
-            config.set("players." + p + "." + "count_lives", 0);
-        }
         save();
     }
 

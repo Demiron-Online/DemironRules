@@ -19,7 +19,7 @@ public class LifeConverstation extends StringPrompt {
 
     @Override
     public @NotNull String getPromptText(@NotNull ConversationContext conversationContext) {
-        return "Как тебя зовут?";
+        return "Как тебя зовут?\nОбрати внимание, отправленное имя в чат, ты сможешь изменить только после смерти персонажа.";
     }
 
     @Override

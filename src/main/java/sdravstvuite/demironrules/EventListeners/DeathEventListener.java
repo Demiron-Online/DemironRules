@@ -2,7 +2,10 @@ package sdravstvuite.demironrules.EventListeners;
 
 import com.nickuc.openlogin.bukkit.api.events.AsyncAuthenticateEvent;
 import net.kyori.adventure.text.Component;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
@@ -28,6 +31,7 @@ public class DeathEventListener implements Listener {
 
     String world = "Demiron";
     String world_the_end = "Demiron_the_end";
+    Integer time_in_limb = 300;
     public void loadWorlds() {
         new WorldCreator(world).createWorld();
         new WorldCreator(world_the_end).createWorld();
@@ -51,7 +55,7 @@ public class DeathEventListener implements Listener {
                 Location loc = new Location(Bukkit.getWorld(world_the_end), 0, 100, 0);
                 e.getPlayer().teleport(loc);
                 ConfigManager.changeLife(e.getPlayer(), "count_lives", -1);
-                startEndTimer(e.getPlayer(), 15);
+                startEndTimer(e.getPlayer(), time_in_limb);
             }
         }
     }
@@ -63,7 +67,7 @@ public class DeathEventListener implements Listener {
         if (p.getWorld() == Bukkit.getWorld(world_the_end)) {
             e.setCancelled(true);
             if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                Location backLoc = new Location(Bukkit.getWorld(world), 0, 90, 0);
+                Location backLoc = new Location(Bukkit.getWorld(world_the_end), 0, 100, 0);
                 p.teleport(backLoc);
             }
         }
@@ -72,8 +76,9 @@ public class DeathEventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(AsyncAuthenticateEvent e) {
         Player p = e.getPlayer();
+        if (p.getGameMode() == GameMode.CREATIVE) return;
         if (p.getWorld() == Bukkit.getWorld(world_the_end)) {
-            startEndTimer(e.getPlayer(), 15);
+            startEndTimer(e.getPlayer(), time_in_limb);
         }
     }
 
@@ -95,14 +100,14 @@ public class DeathEventListener implements Listener {
                     if (p.getBedSpawnLocation() != null) {
                         backLoc = p.getBedSpawnLocation();
                     } else {
-                        backLoc = new Location(Bukkit.getWorld(world), 0, 90, 0);
+                        backLoc = new Location(Bukkit.getWorld(world), -52.5, 68, 34.5);
                     }
                     loadWorlds();
                     p.teleport(backLoc);
                     task.cancel();
                     return;
                 }
-                p.sendMessage(timer_time + " second(s) remains!");
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("До возрождения: " + timer_time + " секунд"));
                 timer_time--;
             }
         }.runTaskTimer(DemironRules.getInstance(), 0L, 20L);
