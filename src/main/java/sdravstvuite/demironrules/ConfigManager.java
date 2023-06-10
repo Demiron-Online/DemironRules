@@ -35,7 +35,6 @@ public class ConfigManager {
         if (!cfg.exists()) {
             try {
                 cfg.createNewFile();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

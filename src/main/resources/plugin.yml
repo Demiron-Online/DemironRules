@@ -5,6 +5,8 @@ api-version: 1.19
 authors: [Sdravstvuite]
 depend: [Towny, OpeNLogin, FastAsyncWorldEdit]
 commands:
+  reloadlife:
+    description: Reload LifeConfig
   changegenderwoman:
     description: Take Woman gender
   changegenderman:

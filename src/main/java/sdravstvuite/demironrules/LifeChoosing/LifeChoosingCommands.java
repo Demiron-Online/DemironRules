@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,8 +22,8 @@ public class LifeChoosingCommands implements CommandExecutor {
     TextComponent racesMessage = Component.text().content("Я Элладец").clickEvent(ClickEvent.runCommand("/changeracealad")).color(TextColor.fromHexString("#0384fc"))
             .append(Component.text().content("  Я Варяг").clickEvent(ClickEvent.runCommand("/changeracevaryag")).color(TextColor.fromHexString("#fcba03")))
             .append(Component.text().content("  Я Вильдиец\n").clickEvent(ClickEvent.runCommand("/changeracevildice")).color(TextColor.fromHexString("#ffcb3b")))
-            .append(Component.text().content("         Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
-            .append(Component.text().content("       Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
+            .append(Component.text().content("     Я Акриец").clickEvent(ClickEvent.runCommand("/changeraceacrice")).color(TextColor.fromHexString("#eb352f")))
+            .append(Component.text().content("     Я Готландец").clickEvent(ClickEvent.runCommand("/changeracegothland")).color(TextColor.fromHexString("#ed694c")))
             .build();
 
     @Override
@@ -45,7 +46,7 @@ public class LifeChoosingCommands implements CommandExecutor {
                 String takedData = ConfigManager.getData(p, "count_lives");
                 if(Integer.parseInt(takedData) == 0){
                     ConfigManager.changeLife((Player) sender, "gender", "man");
-                    sender.sendMessage("Ты теперь мужчина2");
+                    sender.sendMessage("Ты теперь мужчина");
                     p.sendMessage(racesMessage);
                 } else{
                 sender.sendMessage("Нельзя изменить пол при жизни.");
@@ -111,6 +112,14 @@ public class LifeChoosingCommands implements CommandExecutor {
                 }else{
                     sender.sendMessage("Нельзя изменить расу при жизни.");
                 }
+            }
+            if(s.equalsIgnoreCase("reloadlife")){
+                if (!sender.isOp()) {
+                    sender.sendMessage(ChatColor.RED + "Вы не администратор.");
+                    return true;
+                }
+                ConfigManager.checkConfig();
+                sender.sendMessage(ChatColor.GOLD + "Конфиг жизней людей был обновлен");
             }
         }
         return false;

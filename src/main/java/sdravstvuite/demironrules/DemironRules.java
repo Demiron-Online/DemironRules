@@ -31,7 +31,6 @@ public final class DemironRules extends JavaPlugin implements Listener {
     public static ItemStack AxeDrop;
     private ConfigManager configManager;
     private static DemironRules instance;
-//    ScoreboardManager manager;
 
     public void onLoad() {
         instance = this;
@@ -53,9 +52,6 @@ public final class DemironRules extends JavaPlugin implements Listener {
         // Plugin startup logic
         DemironRules plugin;
 
-//        Bukkit.getScheduler().runTask(this, () -> {
-//            manager = Bukkit.getScoreboardManager();
-//        });
 
         ConfigManager.checkConfig();
         ConfigManager.save();
@@ -67,8 +63,10 @@ public final class DemironRules extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new LifeChoosing(this), this);
         getServer().getPluginManager().registerEvents(new LifeScoreboard(this), this);
 
-        getCommand("ChangeGenderWoman").setExecutor(new LifeChoosingCommands());
-        getCommand("ChangeGenderMan").setExecutor(new LifeChoosingCommands());
+        getCommand("reloadlife").setExecutor(new LifeChoosingCommands());
+
+        getCommand("changegenderwoman").setExecutor(new LifeChoosingCommands());
+        getCommand("changegenderman").setExecutor(new LifeChoosingCommands());
 
         getCommand("changeracealad").setExecutor(new LifeChoosingCommands());
         getCommand("changeracevaryag").setExecutor(new LifeChoosingCommands());
@@ -90,19 +88,20 @@ public final class DemironRules extends JavaPlugin implements Listener {
             for (FastBoard board : boards.values()) {
                 updateBoard(board);
             }
-        }, 0, 20);
+        }, 0, 200);
     }
-//    Scoreboard score = manager.getMainScoreboard();
-//    Team t = score.getTeam("nhide");
-//    @EventHandler
-//    public void HideNicknames(PlayerJoinEvent e){
-//        if(t == null) {
-//            t = score.registerNewTeam("nhide");
-//            t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-//            t.setOption(Team.Option.DEATH_MESSAGE_VISIBILITY, Team.OptionStatus.NEVER);
-//        }
-//        t.addEntry(e.getPlayer().getName());
-//    }
+    @EventHandler
+    public void HideNicknames(PlayerJoinEvent e){
+        ScoreboardManager manager = Bukkit.getScoreboardManager();
+        Scoreboard score = manager.getNewScoreboard();
+        Team t = score.getTeam("nhide");
+        if(t == null) {
+            t = score.registerNewTeam("nhide");
+            t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+            t.setOption(Team.Option.DEATH_MESSAGE_VISIBILITY, Team.OptionStatus.NEVER);
+        }
+        t.addEntry(e.getPlayer().getName());
+    }
     @Override
     public void onDisable() {
         // Plugin shutdown logic

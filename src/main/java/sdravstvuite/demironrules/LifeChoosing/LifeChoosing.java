@@ -8,6 +8,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.event.HoverEventSource;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,9 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import sdravstvuite.demironrules.ConfigManager;
 import sdravstvuite.demironrules.DemironRules;
+import sdravstvuite.demironrules.ScoreBoards.FastBoard;
 
 import static sdravstvuite.demironrules.DemironRules.isObjectInteger;
 import static sdravstvuite.demironrules.DemironRules.isObjectString;
+import static sdravstvuite.demironrules.LifeChoosing.LifeScoreboard.updateBoard;
 
 public class LifeChoosing implements Listener {
     DemironRules plugin;
@@ -26,11 +29,18 @@ public class LifeChoosing implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
-    public void onPlayerNotRegAndMove(PlayerMoveEvent e) {
-        Player p = e.getPlayer();
-        if(Integer.parseInt(ConfigManager.getData(p, "count_lives")) == 0) e.setCancelled(true);
-    }
+//    @EventHandler
+//    public void onPlayerNotRegAndMove(PlayerMoveEvent e) {
+//        Player p = e.getPlayer();
+//        String answer = ConfigManager.getData(p, "count_lives");
+//        if (answer.equals("null")){
+//            e.setCancelled(true);
+//            return;
+//        }
+//        else if(answer.equals("0")){
+//            if (Integer.parseInt(answer) == 0) e.setCancelled(true);
+//        }
+//    }
 
     @EventHandler
     public void onPlayerJoin(AsyncAuthenticateEvent e) {
@@ -43,6 +53,7 @@ public class LifeChoosing implements Listener {
             ConfigManager.get().set("players." + p.getDisplayName() + "." + "name", "null");
             ConfigManager.get().set("players." + p.getDisplayName() + "." + "count_lives", 0);
             ConfigManager.save();
+            Location loc = p.getLocation();
             TextComponent message = Component.text().content("Я мужчина\n").clickEvent(ClickEvent.runCommand("/changegenderman")).hoverEvent(HoverEvent.showText(Component.text().content("Я мужчина").build())).color(TextColor.fromHexString("#0384fc"))
                     .append(Component.text().content("Я девушка").clickEvent(ClickEvent.runCommand("/changegenderwoman")).hoverEvent(HoverEvent.showText(Component.text().content("Я женщина").build())).color(TextColor.fromHexString("#03e8fc"))).build();
             p.sendMessage(message);

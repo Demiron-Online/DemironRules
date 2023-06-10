@@ -12,9 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import sdravstvuite.demironrules.DemironRules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // ДООООООООООООООООООООООООООООООООООООООООООООООООПИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИСАААААААААААААААААААААААААТЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬЬ!!!!!!!!!!!!!!!!!!!!!!
 public class FishingEventListener implements Listener { // Ловля сундука вместо рыбы с каким-то шансом
-
     DemironRules plugin;
     public FishingEventListener(DemironRules plugin) {
         this.plugin = plugin;
@@ -29,7 +31,12 @@ public class FishingEventListener implements Listener { // Ловля сунду
             if (n > 8) {
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2, 1);
                 ItemStack openCase = new ItemStack(Material.CHEST);
-                openCase.getItemMeta().setDisplayName(ChatColor.BLUE + "Мокрое Сокровище");
+                ItemMeta meta = openCase.getItemMeta();
+                meta.setDisplayName(ChatColor.BLUE + "Мокрое Сокровище");
+                List<String> lore = new ArrayList<>();
+                lore.add("Этот предмет еще не доработан.");
+                meta.setLore(lore);
+                openCase.setItemMeta(meta);
                 ((Item) e.getCaught()).setItemStack(openCase);
             }
         }

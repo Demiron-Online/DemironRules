@@ -15,6 +15,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerBucketEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import sdravstvuite.demironrules.DemironRules;
@@ -56,25 +58,31 @@ public class LavaEventListener implements Listener {
             if (southBlock.getType() == Material.WATER) {southBlock.setType(Material.COBBLESTONE); event.setCancelled(true);}
             if (westBlock.getType() == Material.WATER) {westBlock.setType(Material.COBBLESTONE); event.setCancelled(true);}
             if (eastBlock.getType() == Material.WATER) {eastBlock.setType(Material.COBBLESTONE); event.setCancelled(true);}
-
         }
     }
     @EventHandler
-    public void onPlayerMovingCloseToLava(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
-        Location loc = p.getLocation();
-        loc = loc.add(3, -3, 3);
-        for (int h = 0; h < 7; h++) {
-            for (int i = 0; i < 7; i++) {
-                for (int j = 0; j < 7; j++) {
-                    if (loc.getBlock().getType() == Material.LAVA) {
-                        p.setFireTicks(80);
-                    }
-                    loc = loc.add(0, 0, -1);
-                }
-                loc = loc.add(-1, 0, 7);
-            }
-            loc = loc.add(7, 1, 7);
+    public void LavaTakeEvent(PlayerBucketFillEvent e) { //
+        if (e.getBlockClicked().getType() == Material.LAVA){
+            e.setCancelled(true);
         }
     }
+
+//    @EventHandler
+//    public void onPlayerMovingCloseToLava(PlayerMoveEvent event) {
+//        Player p = event.getPlayer();
+//        Location loc = p.getLocation();
+//        loc = loc.add(3, 3, 3);
+//        for (int h = 0; h < 7; h++) {
+//            for (int i = 0; i < 7; i++) {
+//                for (int j = 0; j < 7; j++) {
+//                    if (loc.getBlock().getType() == Material.LAVA) {
+//                        p.setFireTicks(100);
+//                    }
+//                    loc = loc.add(0, 0, -1);
+//                }
+//                loc = loc.add(-1, 0, 7);
+//            }
+//            loc = loc.add(7, -1, 0);
+//        }
+//    }
 }

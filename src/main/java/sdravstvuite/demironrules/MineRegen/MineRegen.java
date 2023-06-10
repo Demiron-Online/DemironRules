@@ -1,11 +1,14 @@
 package sdravstvuite.demironrules.MineRegen;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import sdravstvuite.demironrules.ConfigManager;
 
 import java.util.List;
 import java.util.Set;
+
+import static sdravstvuite.demironrules.EventListeners.DeathEventListener.loadWorlds;
 
 public class MineRegen {
     public static double getRInt(double min, double max) {
@@ -17,8 +20,11 @@ public class MineRegen {
         Material blocksType = ConfigManager.getAreaMaterial(group, selection_name);
         assert blocks != null;
         for(Location loc : blocks){
-            if(loc.getBlock().getType() != blocksType){
-                loc.getBlock().setType(blocksType);
+            if(loc.getWorld() != null) {
+                if (loc.getBlock().getType() != blocksType) {
+                    loadWorlds();
+                    loc.getBlock().setType(blocksType);
+                }
             }
         }
     }
